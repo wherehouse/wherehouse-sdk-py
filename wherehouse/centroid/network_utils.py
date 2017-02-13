@@ -1,7 +1,5 @@
-from models.raster import Raster
+from math import ceil
 
-import numpy
-import pandas
 import shapefile
 import random
 import os
@@ -16,6 +14,7 @@ KPH2MPH = 0.621371
 
 
 def create_network_files(nodes_shapefile, edges_shapefile):
+    ''' Convert shapefiles into format needed for Centroid. '''
 
     nodes_output_file = os.path.join(os.path.dirname(nodes_shapefile),
                                      'wherehouse_nodes.csv')
@@ -57,7 +56,7 @@ def create_network_files(nodes_shapefile, edges_shapefile):
     # and write to file.
     for idx, record in enumerate(edges_file.iterRecords()):
         # Convert speed to MPH for capacity inference.
-        speed_mph = numpy.ceil(record[13] * KPH2MPH)
+        speed_mph = ceil(record[13] * KPH2MPH)
         # Make sure the minimum speed isnt 0 to avoid divide by 0 in
         # travel time cost calculations.
         if speed_mph == 0:
@@ -73,6 +72,7 @@ def create_network_files(nodes_shapefile, edges_shapefile):
         wfid.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
     wfid.close()
     print 'Wrote to edge output file: %s' % edges_output_file
+
     # The original shapefile didn't have the eid column making it hard to
     # join routing output for visualization and validation in QGIS.
     # This loop runs over the shapefile records and adds a field then
