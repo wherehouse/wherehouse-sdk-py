@@ -6,7 +6,7 @@ import random
 import os
 
 
-class NetworkUtils():
+class NetworkUtils(object):
     '''
     Utilities for converting road networks into nodes and edges.
 
@@ -28,8 +28,8 @@ class NetworkUtils():
         nodes_file = shapefile.Reader(nodes_shapefile)
 
         # Write the header for the output file
-        with open(nodes_output_file, 'w') as wfid:
-            wfid.write('nid,lon,lat,external_nid\n')
+        with open(nodes_output_file, 'w') as nodes:
+            nodes.write('nid,lon,lat,external_nid\n')
             # Loop through all the shapes in the nodes shapefile and re-index
             # everything starting with index 1. Then write the node out data
             # out to a file.
@@ -39,7 +39,7 @@ class NetworkUtils():
                 # Filter out any nodes at (0, 0)
                 if record.shape.points[0][0] == 0:
                     continue
-                wfid.write('%s,%s,%s,%s\n' % (
+                nodes.write('%s,%s,%s,%s\n' % (
                     idx,
                     record.shape.points[0][0],
                     record.shape.points[0][1],
@@ -51,8 +51,8 @@ class NetworkUtils():
         edges_file = shapefile.Reader(edges_shapefile)
 
         # Write the header for the edges output file.
-        with open(edges_output_file, 'w') as wfid:
-            wfid.write('eid,source,target,dir,capacity,speed_mph,' +
+        with open(edges_output_file, 'w') as edges:
+            edges.write('eid,source,target,dir,capacity,speed_mph,' +
                        'free_flow_travel_time\n')
             # Iterate through all the edge shapes impute missing columns and write
             # to file.
@@ -71,7 +71,7 @@ class NetworkUtils():
                 data = (idx, external_nid_2_nid[record[0]],
                         external_nid_2_nid[record[1]], 0,
                         int(capacity), int(speed_mph), cost_time)
-                wfid.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
+                edges.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
         print 'Wrote to edge output file: %s' % edges_output_file
 
         # The original shapefile didn't have the eid column making it hard to
