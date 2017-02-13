@@ -54,24 +54,29 @@ class NetworkUtils(object):
         with open(edges_output_file, 'w') as edges:
             edges.write('eid,source,target,dir,capacity,speed_mph,' +
                         'free_flow_travel_time\n')
-            # Iterate through all the edge shapes impute missing columns and
+            # Iterate through all the edge shapes, impute missing columns and
             # write to file.
             for idx, record in enumerate(edges_file.iterRecords()):
                 # Convert speed to MPH for capacity inference.
                 speed_mph = ceil(record[13] * cls.KPH_TO_MPH)
-                # Make sure the minimum speed isnt 0 to avoid divide by 0 in
+                # Make sure the minimum speed isn't 0 to avoid divide by 0 in
                 # travel time cost calculations.
-                if speed_mph == 0:
-                    speed_mph = 0.00001
+                speed_mph = 0.00001 if speed_mph == 0 else speed_mph
                 # Impute capacity based on speed and number of lanes
                 capacity = cls.__capacity_profile(speed_mph, record[10])
                 # Compute travel time cost in minutes
                 cost_time = (record[2] * cls.METERS_TO_MPH) / speed_mph * 60
                 # Write to file
-                data = (idx, external_nid_2_nid[record[0]],
-                        external_nid_2_nid[record[1]], 0,
-                        int(capacity), int(speed_mph), cost_time)
-                edges.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
+                edges.write('%s,%s,%s,%s,%s,%s,%s\n' % (
+                    idx,
+                    external_nid_2_nid[record[0]],
+                    external_nid_2_nid[record[1]],
+                    0,
+                    int(capacity),
+                    int(speed_mph),
+                    cost_time
+                ))
+
         print 'Wrote to edge output file: %s' % edges_output_file
 
         # The original shapefile didn't have the eid column making it hard to
@@ -155,9 +160,7 @@ class NetworkUtils(object):
 
         basename, ext = os.path.splitext(SA2_od_file)
         od_output_filename = basename + '.intersection' + ext
-        wfid = open(od_output_filename, 'w')
-
-        wfid.write('origin_nid,destination_nid,flow\n')
-        for (origin_nid, destination_nid), flow in od_inter:
-            wfid.write('%d,%d,%0.3f\n' % (origin_nid, destination_nid, flow))
-        wfid.close()
+        with open(od_output_filename, 'w') as wfid:
+            wfid.write('origin_nid,destination_nid,flow\n')
+            for (origin_nid, destination_nid), flow in od_inter:
+                wfid.write('%d,%d,%0.3f\n' % (origin_nid, destination_nid, flow))

@@ -10,12 +10,22 @@ Centroid
 
 Utilities for converting shapefiles into edges and nodes.
 
-Usage:
-```
-> python
->>> from wherehouse.centroid import NetworkUtils
->>> NetworkUtils.create_network_files(<path>, <path>)
-```
+Usage
+~~~~~
+.. code-block:: bash
+
+    > python
+    >>> from wherehouse.centroid import NetworkUtils
+    >>> NetworkUtils.create_network_files(<path>, <path>)
+
+
+Installation
+------------
+
+.. code-block:: bash
+
+    $ pip install wherehouse
+
 
 Requirements
 ------------

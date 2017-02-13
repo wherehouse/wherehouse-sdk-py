@@ -1,16 +1,35 @@
-########################################
-# Temporary and build files of the workspace
-########################################
-bin
-build
-dist
-misc
-__pycache__
-*.pyc
-*.pyo
-*~
-.coverage
-.cache
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Vim
+*.swp
 
 ########################################
 # OS X temporary files that should never be committed
