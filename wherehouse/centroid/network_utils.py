@@ -104,11 +104,18 @@ def capacity_profile(speed, lanes):
 
 def od_to_intersections(SA2_od_filename,
                         census_raster_file, nodes_shapefile):
+    ''' Convert OD to intersection nodes and edges. '''
+
+    # Load the OD
+    od_filename = SA2_od_filename
 
     # Load a raster file of maping each raster cell to an SA2 it covers
     census_raster = Raster()
     path = census_raster_file
     census_raster.load_data_from_file(path)
+
+    # Load the network nodes
+    nodes_file = shapefile.Reader(nodes_shapefile)
 
     # Loop over all the network nodes and look up which SA2 they are
     # contained in. Maintain a mapping from SA2 to the list of
