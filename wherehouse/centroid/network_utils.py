@@ -17,10 +17,10 @@ KPH2MPH = 0.621371
 
 def create_network_files(nodes_shapefile, edges_shapefile):
 
-    nodes_output_file = ''.join([os.path.dirname(nodes_shapefile),
-                                 'wherehouse_nodes.csv'])
-    edges_output_file = ''.join([os.path.dirname(edges_shapefile),
-                                 'wherehouse_edges.csv'])
+    nodes_output_file = os.path.join(os.path.dirname(nodes_shapefile),
+                                     'wherehouse_nodes.csv')
+    edges_output_file = os.path.join(os.path.dirname(edges_shapefile),
+                                     'wherehouse_edges.csv')
     # Load the nodes shapefile
     nodes_file = shapefile.Reader(nodes_shapefile)
 
@@ -43,6 +43,8 @@ def create_network_files(nodes_shapefile, edges_shapefile):
             record.shape.points[0][1],
             record.record[0]))
     wfid.close()
+    print 'Wrote to node output file: %s' % nodes_output_file
+
     # Open the edges file
     edges_file = shapefile.Reader(edges_shapefile)
 
@@ -70,6 +72,7 @@ def create_network_files(nodes_shapefile, edges_shapefile):
                 int(capacity), int(speed_mph), cost_time)
         wfid.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
     wfid.close()
+    print 'Wrote to edge output file: %s' % edges_output_file
     # The original shapefile didn't have the eid column making it hard to
     # join routing output for visualization and validation in QGIS.
     # This loop runs over the shapefile records and adds a field then
@@ -87,6 +90,7 @@ def create_network_files(nodes_shapefile, edges_shapefile):
 
     basename, ext = os.path.splitext(edges_shapefile)
     extended_file.save(basename + "_" + ext)
+    print 'Wrote to extended edges shapefile: %s' % basename + "_" + ext
 
 
 def capacity_profile(speed, lanes):
