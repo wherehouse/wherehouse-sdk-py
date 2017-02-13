@@ -31,8 +31,8 @@ class NetworkUtils(object):
         with open(nodes_output_file, 'w') as nodes:
             nodes.write('nid,lon,lat,external_nid\n')
             # Loop through all the shapes in the nodes shapefile and re-index
-            # everything starting with index 1. Then write the node out data
-            # out to a file.
+            # everything starting with index 1. Then write the node data out
+            # to a file.
             external_nid_2_nid = {}
             for idx, record in enumerate(nodes_file.iterShapeRecords()):
                 external_nid_2_nid[record.record[0]] = idx
@@ -54,13 +54,13 @@ class NetworkUtils(object):
         with open(edges_output_file, 'w') as edges:
             edges.write('eid,source,target,dir,capacity,speed_mph,' +
                         'free_flow_travel_time\n')
-            # Iterate through all the edge shapes impute missing columns and write
-            # to file.
+            # Iterate through all the edge shapes impute missing columns and
+            # write to file.
             for idx, record in enumerate(edges_file.iterRecords()):
                 # Convert speed to MPH for capacity inference.
                 speed_mph = ceil(record[13] * cls.KPH_TO_MPH)
-                # Make sure the minimum speed isnt 0 to avoid divide by 0 in travel
-                # time cost calculations.
+                # Make sure the minimum speed isnt 0 to avoid divide by 0 in
+                # travel time cost calculations.
                 if speed_mph == 0:
                     speed_mph = 0.00001
                 # Impute capacity based on speed and number of lanes
@@ -126,7 +126,7 @@ class NetworkUtils(object):
             lon, lat = rec.shape.points[0]
             sa2 = census_raster.in_poly(lon, lat)
             sa2 = str(sa2)
-            # If no SA2 is found, the value will be 0 and we should ignore the node
+            # If no SA2 is found, the value will be 0 and we should ignore node
             if sa2 == 0:
                 continue
             if sa2 in sa2_2_nid:
