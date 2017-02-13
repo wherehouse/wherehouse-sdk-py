@@ -53,7 +53,7 @@ class NetworkUtils(object):
         # Write the header for the edges output file.
         with open(edges_output_file, 'w') as edges:
             edges.write('eid,source,target,dir,capacity,speed_mph,' +
-                       'free_flow_travel_time\n')
+                        'free_flow_travel_time\n')
             # Iterate through all the edge shapes impute missing columns and write
             # to file.
             for idx, record in enumerate(edges_file.iterRecords()):
@@ -64,7 +64,7 @@ class NetworkUtils(object):
                 if speed_mph == 0:
                     speed_mph = 0.00001
                 # Impute capacity based on speed and number of lanes
-                capacity = cls.capacity_profile(speed_mph, record[10])
+                capacity = cls.__capacity_profile(speed_mph, record[10])
                 # Compute travel time cost in minutes
                 cost_time = (record[2] * cls.METERS_TO_MPH) / speed_mph * 60
                 # Write to file
@@ -94,7 +94,7 @@ class NetworkUtils(object):
         print 'Wrote to extended edges shapefile: %s' % basename + "_" + ext
 
     @staticmethod
-    def capacity_profile(speed, lanes):
+    def __capacity_profile(speed, lanes):
         if speed >= 40:
             return int((1700. + 10. * speed) * lanes)
         else:
