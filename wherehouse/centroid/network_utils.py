@@ -90,8 +90,9 @@ class NetworkUtils(object):
             extended_file._shapes.append(record.shape)
 
         basename, ext = os.path.splitext(edges_shapefile)
-        extended_file.save(basename + "_" + ext)
-        print 'Wrote to extended edges shapefile: %s' % basename + "_" + ext
+        name = basename + "_eid" + ext
+        extended_file.save(name)
+        print 'Wrote to extended edges shapefile: %s' % name
 
     @staticmethod
     def __capacity_profile(speed, lanes):
