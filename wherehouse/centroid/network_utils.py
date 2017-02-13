@@ -68,7 +68,7 @@ def create_network_files(nodes_shapefile, edges_shapefile):
         data = (idx, external_nid_2_nid[record[0]],
                 external_nid_2_nid[record[1]], 0,
                 int(capacity), int(speed_mph), cost_time)
-        wfid.write('%s %s %s %s %s %s %s\n' % data)
+        wfid.write('%s,%s,%s,%s,%s,%s,%s\n' % data)
     wfid.close()
     # The original shapefile didn't have the eid column making it hard to
     # join routing output for visualization and validation in QGIS.
