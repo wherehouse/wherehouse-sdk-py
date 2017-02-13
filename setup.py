@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 
 # Get the long description from the README file
-with codecs_open('README.md', encoding='utf-8') as f:
+with codecs_open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 # Parse the version from the wherehouse module.
