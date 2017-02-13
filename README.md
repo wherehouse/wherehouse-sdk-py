@@ -12,9 +12,9 @@ Utilities for converting shapefiles into edges and nodes.
 
 Usage:
 ```
->python
->from wherehouse.centroid import network_utils
->network_utils.create_network_files(<path>, <path>)
+> python
+>>> from wherehouse.centroid import network_utils
+>>> network_utils.create_network_files(<path>, <path>)
 ```
 
 Requirements
