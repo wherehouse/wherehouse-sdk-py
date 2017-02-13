@@ -1,0 +1,18 @@
+########################################
+# Temporary and build files of the workspace
+########################################
+bin
+build
+dist
+misc
+__pycache__
+*.pyc
+*.pyo
+*~
+.coverage
+.cache
+
+########################################
+# OS X temporary files that should never be committed
+########################################
+.DS_Store
