@@ -13,6 +13,7 @@ Utilities for converting shapefiles into edges and nodes.
 
 Usage
 ~~~~~
+
 .. code-block:: bash
 
     $ python
